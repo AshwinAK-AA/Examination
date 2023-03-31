@@ -1,14 +1,20 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_lst_filePaths" Type="InArgument(scg:List(x:String))" />
+    <x:Property Name="in_str_mainDirectory" Type="InArgument(x:String)" />
+    <x:Property Name="in_int_retryNumber" Type="InArgument(x:Int32)" />
   </x:Members>
+  <this:Process.in_int_retryNumber>
+    <InArgument x:TypeArguments="x:Int32" />
+  </this:Process.in_int_retryNumber>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>494,507</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>630,1998.0000000000002</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="50">
+    <scg:List x:TypeArguments="x:String" Capacity="34">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -37,10 +43,16 @@
       <x:String>System.Windows.Forms</x:String>
       <x:String>GlobalVariablesNamespace</x:String>
       <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="40">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="54">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -76,16 +88,228 @@
       <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
       <AssemblyReference>System.ComponentModel</AssemblyReference>
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="400,401" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="640,1933" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str_exceptionFolder" />
+      <Variable x:TypeArguments="s:Exception" Name="SysException" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="338,92" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
-    <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="338,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
+    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="578,94" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Looping through files and adding data to Queue '&quot;+in_Config(&quot;OrchestratorQueueName&quot;).ToString+&quot;'.&quot;]" />
+    <ui:RetryScope DisplayName="Retry Scope: Retry Until Max Count" sap:VirtualizedContainerService.HintSize="578,1612" sap2010:WorkflowViewState.IdRef="RetryScope_1" RetryInterval="00:00:03">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each: File in Folder" sap:VirtualizedContainerService.HintSize="536,1303" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_lst_filePaths]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:String">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:String" Name="currentFile" />
+                </ActivityAction.Argument>
+                <TryCatch DisplayName="Try Catch: For Each File in Folder" sap:VirtualizedContainerService.HintSize="500,1178" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                  <TryCatch.Variables>
+                    <Variable x:TypeArguments="sd:DataTable" Name="dt_customers" />
+                    <Variable x:TypeArguments="sd:DataTable" Name="dt_purchaseOrders" />
+                    <Variable x:TypeArguments="x:String" Name="str_inProgFile" />
+                    <Variable x:TypeArguments="x:String" Name="str_processedFile" />
+                  </TryCatch.Variables>
+                  <TryCatch.Try>
+                    <Sequence DisplayName="File+Data Manipulation &amp; Add to Queue" sap:VirtualizedContainerService.HintSize="462,945" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign DisplayName="Assign:Exception" sap:VirtualizedContainerService.HintSize="400,61" sap2010:WorkflowViewState.IdRef="Assign_5">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="s:Exception">[SysException]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="s:Exception">[Nothing]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Sequence sap2010:Annotation.AnnotationText="-&gt;Move current file to 'In Progress' Folder&#xA;-&gt;Read 'Customers' and 'Purchase Orders' tables&#xA;-&gt;Combine Data appropriately" DisplayName="File+Data Manipulation" sap:VirtualizedContainerService.HintSize="400,143" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign: Transfer to 'In Progress'" sap:VirtualizedContainerService.HintSize="400,61" sap2010:WorkflowViewState.IdRef="Assign_1">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_inProgFile]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[Path.Combine(in_str_mainDirectory,"In_Progress",New FileInfo(currentFile).Name)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:LogMessage DisplayName="Log Message: Moving File" sap:VirtualizedContainerService.HintSize="400,94" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Moving '&quot;+New FileInfo(currentFile).Name+&quot;' to 'In Progress' Folder.&quot;]" />
+                        <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[str_inProgFile]" DisplayName="Move Current File -&gt; In Progress Folder" sap:VirtualizedContainerService.HintSize="400,161" sap2010:WorkflowViewState.IdRef="MoveFile_1" Path="[currentFile]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:MoveFile>
+                        <Sequence sap2010:Annotation.AnnotationText="-&gt;Customers&#xA;-&gt;Purchase Orders" DisplayName="Read Data from Excel" sap:VirtualizedContainerService.HintSize="400,127" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message: Customers" sap:VirtualizedContainerService.HintSize="338,94" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Reading 'Customers' table.&quot;]" />
+                          <ui:ReadRange Range="{x:Null}" AddHeaders="True" sap2010:Annotation.AnnotationText="Reading 'Customer' Sheet" DataTable="[dt_customers]" DisplayName="Read: Customers" sap:VirtualizedContainerService.HintSize="338,119" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Customers" WorkbookPath="[str_inProgFile]">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ReadRange>
+                          <ui:LogMessage DisplayName="Log Message: Customers" sap:VirtualizedContainerService.HintSize="338,94" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Reading 'Purchase Orders' table.&quot;]" />
+                          <ui:ReadRange Range="{x:Null}" AddHeaders="True" sap2010:Annotation.AnnotationText="Reading 'Customer' Sheet" DataTable="[dt_purchaseOrders]" DisplayName="Read: Purchase Orders" sap:VirtualizedContainerService.HintSize="338,119" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Purchase Orders" WorkbookPath="[str_inProgFile]">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ReadRange>
+                        </Sequence>
+                        <Sequence sap2010:Annotation.AnnotationText="'Customers' and 'Purchase Orders' are combined" DisplayName="Manipulate Data" sap:VirtualizedContainerService.HintSize="400,135" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Sequence>
+                      </Sequence>
+                      <Sequence sap2010:Annotation.AnnotationText="-&gt;Adding items to Queue with Unique Reference" DisplayName="Add to Queue" sap:VirtualizedContainerService.HintSize="400,114" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                      <Assign DisplayName="Assign: Transfer to 'Processed'" sap:VirtualizedContainerService.HintSize="400,61" sap2010:WorkflowViewState.IdRef="Assign_4">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[str_processedFile]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[Path.Combine(in_str_mainDirectory,"Processed",New FileInfo(currentFile).Name)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:LogMessage DisplayName="Log Message: Moving File" sap:VirtualizedContainerService.HintSize="400,94" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Moving '&quot;+New FileInfo(str_inProgFile).Name+&quot;' to 'Processed' Folder.&quot;]" />
+                      <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[Path.Combine(str_processedFile,&quot;_&quot;,Now.ToString(&quot;ddMMyyyy&quot;))]" DisplayName="Move Current File -&gt; Processed Folder" sap:VirtualizedContainerService.HintSize="400,161" sap2010:WorkflowViewState.IdRef="MoveFile_4" Path="[str_inProgFile]">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:MoveFile>
+                    </Sequence>
+                  </TryCatch.Try>
+                  <TryCatch.Catches>
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="466,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ActivityAction x:TypeArguments="s:Exception">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Catch: For Each File in Folder" sap:VirtualizedContainerService.HintSize="400,559" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign DisplayName="Assign: Transfer to 'Exception'" sap:VirtualizedContainerService.HintSize="338,61" sap2010:WorkflowViewState.IdRef="Assign_3">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[str_exceptionFolder]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[Path.Combine(in_str_mainDirectory,"Exception",New FileInfo(currentFile).Name)]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign DisplayName="Assign: Increment Retry" sap:VirtualizedContainerService.HintSize="338,61" sap2010:WorkflowViewState.IdRef="Assign_6">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Int32">[in_int_retryNumber]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Int32">[in_int_retryNumber+1]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:LogMessage DisplayName="Log Message: Moving File" sap:VirtualizedContainerService.HintSize="338,94" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Moving '&quot;+New FileInfo(If(File.Exists(currentFile),currentFile,str_inProgFile)).Name+&quot;' to 'Exception' Folder.&quot;]" />
+                          <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" sap2010:Annotation.AnnotationText="Moving 'current' file(which can either be in 'Input' or 'In Progress' folder) to Exceptions Folder with Timestamp" Destination="[Path.Combine(str_exceptionFolder,&quot;_&quot;,Now.ToString(&quot;ddMMyyyy&quot;))]" DisplayName="Move Current File -&gt; Exception Folder" sap:VirtualizedContainerService.HintSize="338,113" sap2010:WorkflowViewState.IdRef="MoveFile_3" Path="[If(File.Exists(currentFile),currentFile,str_inProgFile)]">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:MoveFile>
+                        </Sequence>
+                      </ActivityAction>
+                    </Catch>
+                  </TryCatch.Catches>
+                </TryCatch>
+              </ActivityAction>
+            </ui:ForEach.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:ForEach>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean">
+          <ui:CheckTrue sap2010:Annotation.AnnotationText="Retry only if:&#xD;&#xA;-&gt;Max Retry Number has not been reached&#xD;&#xA;-&gt;System Exception has occured" DisplayName="Check True: Max Retry Reached?" ErrorMessage="Max Retry reached, hence terminating Job." Expression="[(in_int_retryNumber&lt;CInt(in_Config(&quot;MaxRetryNumber&quot;).ToString)) AndAlso (SysException IsNot Nothing)]" sap:VirtualizedContainerService.HintSize="334,148" sap2010:WorkflowViewState.IdRef="CheckTrue_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:CheckTrue>
+        </ActivityFunc>
+      </ui:RetryScope.Condition>
+    </ui:RetryScope>
   </Sequence>
 </Activity>
