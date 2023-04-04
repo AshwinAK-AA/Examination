@@ -1,0 +1,250 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:si="clr-namespace:System.IO;assembly=System.Private.CoreLib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>933,3286</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="50">
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Windows.Forms</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.CV</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Activities.System.Compression.Zip</x:String>
+      <x:String>UiPath.Activities.System.Encode</x:String>
+      <x:String>UiPath.Activities.System.Compression.Workflow</x:String>
+      <x:String>UiPath.Mail</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="80">
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.CV.Activities</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.CodeDom</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="692,3221" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str" />
+      <Variable x:TypeArguments="x:String" Name="str_URL2" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="630,92" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+    <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="Swaglab_URL2" CacheStrategy="None" DisplayName="Get Asset" sap:VirtualizedContainerService.HintSize="630,143" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
+      <ui:GetRobotAsset.Value>
+        <OutArgument x:TypeArguments="x:String">[str_URL2]</OutArgument>
+      </ui:GetRobotAsset.Value>
+    </ui:GetRobotAsset>
+    <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Browser Chrome: Swag Labs" sap:VirtualizedContainerService.HintSize="630,2435" sap2010:WorkflowViewState.IdRef="NApplicationCard_2" InteractionMode="DebuggerApi" ScopeGuid="a45a94a9-a826-4292-8963-46f1c79e9825" Version="V2">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="596,2218" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="534,2103" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <TryCatch.Try>
+                <Sequence sap:VirtualizedContainerService.HintSize="496,1875" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Default="C:\Users\dhanamithra.gilda\Documents\UiPath\Swaglabs Exercise\Screenshots" Name="str_Folderpath" />
+                    <Variable x:TypeArguments="ui:Image" Name="str_Test_Image" />
+                    <Variable x:TypeArguments="si:FileInfo" Name="str_screenshotfolder" />
+                    <Variable x:TypeArguments="x:String" Name="str_Check" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'INPUT first-name'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="434,218" sap2010:WorkflowViewState.IdRef="NTypeInto_4" ScopeIdentifier="a45a94a9-a826-4292-8963-46f1c79e9825" Text="[in_TransactionItem.SpecificContent(&quot;Customer First Name&quot;).ToString]" Version="V3">
+                    <uix:NTypeInto.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.saucedemo.com/checkout-step-one.html" DesignTimeRectangle="493, 379, 380, 39" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'INPUT first-name'" FullSelectorArgument="&lt;webctrl id='first-name' tag='INPUT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='first-name' tag='INPUT' type='text' class='input_error form_input' aaname='' /&gt;" Guid="d2e83afe-13b1-43ec-b835-e89eda7ee78a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAYAAAAArCAYAAABxa18mAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPQSURBVHhe7dvhSxtnAMfx/cN5I5gggsg4SkJda0FJGZEwlNZCWEClGMIqBBnCIQpdGNpiGFVMUZtZR8WE8Nvz5J6c0aSlzdK9yPP9wIGXy909eXPfuyfxBwEAvEQAAMBTBAAAPEUAAMBTBAAAPEUAAMBTBAAAPEUAAMBTBAAAPEUAAMBTBAAAPEUAAMBTBAAAPEUAAMBTBAAAPEUAAMBTcQDq5QUlJoO+JSifSjd7yk0FevT7mXv36O0vm/M93FS97V7oer+pYHJF+24VADAadwOwvOfWRuzjntZf7unSrQ7SCYANTunYveIQAAD4Lv6fAFRXo7t7tzqIDUCwvKpMakHr5qEjRgAA4Lv4ygCcqvQwUO51tGYv1rmwpt+W5jWRchfnllu3U0eptIIXoc7bA6aWPhOCTgDKp6q/WtDE456poHsBaJ5sKfsgHR1ral7Z8ht9ctvsuWZfhqp0x2G258IzNT+EevZTtM9EkFepduX2MMy4K8vmnKlofNNLmzrqHhAAxtjQAUiYO/XiYUPN6KVo/6dbumyZlZua1s37H203oo2vV77uCcB+32DP9ThQ5pV7DOgNwM2Osqk5ZXdOO+dtnm8rOxMou3ttt7rY3G6/fFs0+84p+aN5qnhn39PSu5J5z0xB1U5gzlRZDJTMb6t+Yzc3dLBmA1T+4lgBYBx8+Uvg+KLdH4DptVq04lxWnirxYEXhyVUchdg3BcA43VRmakGl9+bv3gD8/UZh9Ti+47eqz804n//R+bvzGRZNhDprVjTuO2Nth8pNumP/taHpOAZdNRWDtJ4dulUAGFNDPwHEF+tYS+e7G8o+MXfc02nNLhYVfnCbvjUARt3eqds78TtTQFc6qqwoYy7QnSme7uLG3f8ZonHfHevebQDsuHqP07N0PysAjKuRBaD5T0Of7PRPR0sHv84psbQTPQ0MEQC1j6NppEIhDkBzN6/ETF6Vk9tz2f2GDoB9Agg2dBRtAACvjCgA1+a1tJJLbi693VD4S1qJvAvAYUHJmVVV40D0GxQVOxUUdO7IXQBCE4BgVfsf7caWLg83lJn6DwFw3wFk1v6MvrtoX6u+k1dytqCD+/+PAABjZnRTQPd+TZN8UlS1O1lv7uYrP5snAnsx/8yTwMBjGkdr83EA1D5T+KL3FztbCu1U0dABMPrGvXo7dQUAYywOAADALwQAADxFAADAUwQAADxFAADAUwQAADxFAADAUwQAADxFAADAUwQAADxFAADAUwQAADxFAADAUwQAADwVB+Di4oKFhYWFxYOliycAAPAUAQAAL0n/AmfAkLhJ4LYWAAAAAElFTkSuQmCC" InformativeScreenshot="61b087cc8b6cee538bc6151e8ee7ea03.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Swag Labs' /&gt;" SearchSteps="FuzzySelector, Image" Version="V2" Visibility="Interactive" />
+                    </uix:NTypeInto.Target>
+                  </uix:NTypeInto>
+                  <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'INPUT last-name'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="434,218" sap2010:WorkflowViewState.IdRef="NTypeInto_5" ScopeIdentifier="a45a94a9-a826-4292-8963-46f1c79e9825" Text="[in_TransactionItem.SpecificContent(&quot;Customer Last Name&quot;).ToString]" Version="V3">
+                    <uix:NTypeInto.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.saucedemo.com/checkout-step-one.html" DesignTimeRectangle="493, 433, 380, 39" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'INPUT last-name'" FullSelectorArgument="&lt;webctrl id='last-name' tag='INPUT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='last-name' tag='INPUT' type='text' class='input_error form_input' aaname='' /&gt;" Guid="e73ae038-ea26-4252-a559-1f2440107af5" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAYAAAAArCAYAAABxa18mAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAQaSURBVHhe7drdSxtZAIbx/YdzIxgRQaQMEtG2CkpkUcKitFZCBQ3FIFsheBEYJEIbRFuUpUpSjHWjRTES3j1nPpL40SXKuhc5zw8GMjnJzPFmnpkTfxMAwEkEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAc1QpAdWNaiYVStPf/2lnwlBhfV7UZvRH7vi6vf1E70S4A4L/z/AE4L2ntQ0n1aPchQQD6PXn5o+idCAEAgGfz/AEoL4V399HuQ2wAvIUljQ1Ma60SvWkRAAB4Nl0HoHG8qfRoKrhTTwxOKr3xRZfRmG4O9ef8pPrs2EBK3jtftWZ0TPtevP0iBEEANiqqfpxW3+uOpaC7ATj/rOWp1L3zWPZcIx98FeJ5mDnO+Sdq/PD15mU47z4vo/zhRfgFy8y7sGDOORDOb2h+XQetPwoAelt3AbguKj0woXSxoobZbdS2lB72lN6+CoaD785uqn5jP3uotXFPr7bOgjF9WuzuCcAEQKoo/9rT2MfoMeBWAA61MmrGVndVtxf9810tm/OM5A6D0TA27TnWv66Y704o+cI8VXyz87zRt7z5zHBW5SAaJyrMeEpmtlS9tsNn2lu1Adr417kCQK/oLgB/f5FfPmrf8Rvlt+au+e3n4HW9MKvE6KL844vg4nvLowJgVNY1Njit/HfzujMA10cql3Zbd/xWzTwxJMwFu2ZeB/OfMREKhwwTExOIodUwEIGmr7n+6Nh/5TTUikHMRMZL6c1+tAsAPazLJaALHRQWNWYujsHySry1Pn+j2nZO6Slzxz2U0sjMivwf0dBjA2BU7Z26vRO/swRUK63o1fhEa8km2KJj359/GIDO40qldgDsvDr/lo5t7lP4aQDoZV0FoLGdUWI4o8LxmS7tMo9hL9rx5xs/2+/bGOy9n1Bivhg+DTwhAGoehctI2Ww7AMc5jZiL9/J+RZd2ycYI5vzUANgnAC+ng3AAAJzTXQB8EwBvSTvndu9G9f2cxgbjAFyZC3hKyfloLb15Jv+PlBKZKAD7WSWHl1RuBeK+ewGwKvbu396RRwGwF+z+WeVr4YEalS3NvTDjTw1A9BtA8JuCPWTzStViRsmRrPZuLQsBQG+6HYA7SyGt5ZDmifx3nf8tsynfLtPEF9w7/02TnFpROf7BwNzNF343TwT2eL94EngwAMbB6qT5XrwEdKGDjYyGbHjMsfpemnMU208Xjw+AcW/eS+2lKwDoca0AAADcQgAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFEEAAAcRQAAwFGtAJyenrKxsbGxObDFeAIAAEcRAABwkvQPafaRTSUJ8u4AAAAASUVORK5CYII=" InformativeScreenshot="b3d7f431061ed855ad552991e5953b93.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Swag Labs' /&gt;" SearchSteps="FuzzySelector, Image" Version="V2" Visibility="Interactive" />
+                    </uix:NTypeInto.Target>
+                  </uix:NTypeInto>
+                  <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'INPUT postal-code'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="434,218" sap2010:WorkflowViewState.IdRef="NTypeInto_6" ScopeIdentifier="a45a94a9-a826-4292-8963-46f1c79e9825" Text="[in_TransactionItem.SpecificContent(&quot;Zip Code&quot;).ToString]" Version="V3">
+                    <uix:NTypeInto.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.saucedemo.com/checkout-step-one.html" DesignTimeRectangle="493, 491, 380, 39" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'INPUT postal-code'" FullSelectorArgument="&lt;webctrl id='postal-code' tag='INPUT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='postal-code' tag='INPUT' type='text' class='input_error form_input' aaname='' /&gt;" Guid="62f8609d-a5ac-4632-a0c1-cb19c17154e7" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAYAAAAArCAYAAABxa18mAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAVOSURBVHhe7dvvS9taHMfx+w/7RLBlFKQPwqhsUweK5VIRcTgnZQ4nQ5GtUESEculgK6UbrAw3VOZ+qJeKlvK95yQnNU3S2tW67XLeLwh40jRN8uD7OT/iXwIAsBIBAACWIgAAwFIEAABYigAAAEsRAABgKQIAACxFAACApQgAALAUAQAAliIAAMBSBAAAWIoAAABLEQAAYCkCAAAsdfsB8HFDUs6GfDBNAMCfoR0AW/ccGRmLbrk36sOLsuTuODK5+8U7+Cfsb0xLIl81LZHXS6HfuJORiSclOW6ZA34pdV9jM7J1ZJoxGp93ZPlhRkbN9Y6ms5IrvpeG+Xxgbx7JyL1NOTRNAPjVuo4ALlWBSqRXpHJhdgzkwA0WN0QMHQDO9oFpqd/5UZW1KacjJAZ2WpbnL8pyYprX6x0ADf0MktOy+M8naTT1nqYbCHPpIVwvAQDgN4sPgFZVltMZyZXPzI4BnRZkcmxBdgMhEg4AV1kVw2FME1VWfrKo9giA1ltZHu/yDD5uSHosK8VT0x4EAQDgN4sNgA/r0zIyWwj0pDt78rqIz+19ktKTGRlNelMjqflN+RCaF7ksLcjI/J5cmrYWGwC6GPoB0DxQ581K4o533sTDFSl9c4/ynL6V1QcZM300LXPb3nTM4faMt8/f/OLa+i6Vp1fnG30QPF+PAAheUzf+tNVpVbbmp71nkcxIOvwsmnUpLoWe1V4oAOKOufE8EwB0Fw2Ao22ZSIaLYjQARpL33RC41EXwQoXBYxUad1XBbM/ln8vuvCOTO99N2xMJAFXwX876UypfpKj/XtiRQz1qaJ3LfjEniaQaRZhiqL+felp1f/fyx57kVC99+Z33WVyvWq9BjExtSE331lUY1J6poFDXue9+2j0A3EBZLJlWD+5oyZGJ9aqc6Gmi5nd5nQ8+C3NP2YLsuyOhppy8yYujA6l9raH7VueoraswmNpmhADg1oQC4Mwt2un1umn7YgJgobNnL633suo4sljx26q4RoLEfNfvpZstNV+QQ10s9RtDoSkj95qyqsC+8hagK08ykpjdlNq3c7fdIRIA53JYLaljTVM7VgGni/6xbtw8ANxRTnikEHwWn/V0Ufie9Cjr/tW16vsez0ulHZ5aXdacQLgBwJB1BIC38JuXWkch0qIBEJnGUT3b0kJg/7u8JNo97Svx3zVievCaGxpLZa+he/HFFZm8d19GUxmZWCpcTZXEff9bSVZnpyWVCoaOX/RvOAWkuEHhX1ub97zc++xyTx379d+BQAxuwQV0ABimqwDoufDb/wjAP6aWz0gqMpK4JgCuHQE0pXF65k07aSoMiuqz9u9Eiq3qRd9Vv/esKsf/mhHD0aY4/QRAH4vAL38McQTQR9gAwDC1AyC68Bv0s2sA3acvegZAtzWA9CN57fbyTc9aFXRvvr0uz1U7vWECQI86xlek4r6yqenrcGTy1YEXVuo6dxdV4e0nAJSer4E+fuuds8sawOiUKu7us+h/DaB9DnXfh3sLXUZjADAc7QDQhbX7FETMFNCLkrz033xRx+m3VtyFVk33spOqaMcUr94BoITehol7C2htVv2uvj73jRuzfqC1Pknxb13g1WemuDbqmzKnQsDdl5qR1epOoOj3DgCtUS9I7rp/BItcUx9vAZVVWAVHK9fdNwAMWWgRuD/XFfGTYjY6RQQA+KPcSgAAAP58BAAAWGqgAAAA/P8RAABgKQIAACxFAACApQgAALAUAQAAliIAAMBSBAAAWIoAAABLEQAAYCkCAAAs1Q6Ar1+/srGxsbFZsPkYAQCApQgAALCSyH8Pvu/xpdvAyAAAAABJRU5ErkJggg==" InformativeScreenshot="e2c5883701ebaac23b43ba2cab6bc090.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Swag Labs' /&gt;" SearchSteps="FuzzySelector, Image" Version="V2" Visibility="Interactive" />
+                    </uix:NTypeInto.Target>
+                  </uix:NTypeInto>
+                  <uix:NClick ClickType="Single" DisplayName="Click 'Continue'" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="a45a94a9-a826-4292-8963-46f1c79e9825" Version="V3">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.saucedemo.com/checkout-step-one.html" DesignTimeRectangle="1088, 678, 220, 34" DesignTimeScaleFactor="1" ElementType="Button" FriendlyName="'Continue'" FullSelectorArgument="&lt;webctrl id='continue' tag='INPUT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='continue' tag='INPUT' type='submit' class='submit-button btn btn_primary cart_button btn_action' aaname='Continue' check:text='Continue' /&gt;" Guid="f9ca8fba-2aab-40f5-aaaf-8110e6badd0a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAOAAAAAmCAYAAADdnJdIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAQpSURBVHhe7Z3BSxtZHMf3f/Ag7WLFmKbE0ISJxmBoKZYaECnFIot4cZGSg6duySEBUSrUgkVKKTnl0JOUHApCxVOPPZQepIciS2jPy/4He/vu+2XmTWbGUcepybPl+4XPYea9eYkyn7zfzAuZ38AwjLFQQIYxGJ+Af//3L+r/vMe97w3c/vaKEHJBiFPiljjmjSugNFA8QnqLOOaV0BVQ7Aw7gBBysYhrOq6AnP0I6Q/imo4rYFhHQkhv0KGAhBhAhwISYgAdCkiIAXQoICEG0KGAhBhAhwISYgAdCvgjtLdQaCwgOXMTg6MJDIymcHWmjHRzDaV2SP+esoHMTAoD1n1YX8LayWVChwLG5esaxh6oE340jeHKIrK7VeSbK0gt2TIOLlVQ7JGEU4276nUXMB7cf6Dew8GWbx+5nOhQwFjsIP9E5JtA+t32sfbJFyXVlkCyebztIig8s0IFJD8POhQwDoerSMos96SKW2HtR5sotOzZyG1X5Wr+aRlDlpSqCVyZLmOs5Z2t6khLGVurorS/jOR02u43N4/shx1/nwDpPWnbQnZRbS9WMBV5vFcYr8kYd5H9ZG/bBMcSdjDZVOW2M86ANYHk0yqm+l5q/xroUMA47C10TsLU2+6JfCrtTWSX1IyZKSL5fBX53QrSf8iJnEKisen0c4SZK2FYyZlpVmGp68sRETYzC+tQ+mxjUomd+VOkUX1EcsVkp+0EAU8dL7qAhWcTql8aI49XkFOvmXs+i2sZKbVXPZKSqOhQwBjY12B65jmbUrPckc0nrJoRcyJSZh75I9mnZ7cyco4cwq3WfOea8vqbbjlrSxMsQU8Q8IzxIgnozPiJlxsoHW53ebuAq+rvivp/IF10KGAczjkDusIEyjVbZHUC78u2I4yv7FN8qmBE7R9pdMvVcwl4xniRBHT+3pPwvjcSDR0KGIdzXAPK9mUWsLAuN5OCAqqS+aHnWEfA5Au75A1S+BixFCcuOhQwFp67oHvHT77ia7tE1XdBw0tQdZKLMMES9DwC+oSOJ6D9IWBh7MDT56Pdxz3W+cD5ver/wCnuLmNsfQXjn7v7SDR0KGBcvqoTXBa+A+uANx4Vj68DttfsRfIoN2EiCKhnzuF1NVarjqmOwPEE1NsDzo2afFPumE5gaNp77I6aKeUmTArXHi0j1/oL2dodXFHHDdXq4VUAORUdCvgjtLcwHvWbMGrGs2qeZYi5WWTCliEiCHj7aAO5x6WOAN3yMaaACt8yhYi4v23Psr5j/csQg8USrr+sG/jGz6+BDgUkxAA6FJAQA+hQQEIMoEMBCTGADgUkxAA6FJAQA+hQQEIMoEMBCTGAjisgf5qekP4Q+tP0fDgLIf0h9OEsfDwZIb1HHAt9PJlEGsROikjIxSJOiVte+SQ+ARmG6W8oIMMYC/A/ch6/h2dmRDQAAAAASUVORK5CYII=" InformativeScreenshot="03b1b1f4b54b0b08917104d2ba77f152.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Swag Labs' /&gt;" SearchSteps="FuzzySelector, Image" Version="V2" Visibility="Interactive" />
+                    </uix:NClick.Target>
+                  </uix:NClick>
+                  <ui:TakeScreenshot WaitBefore="{x:Null}" DisplayName="Take Screenshot 'DIV  checkout_summary_c...'" sap:VirtualizedContainerService.HintSize="434,107" sap2010:WorkflowViewState.IdRef="TakeScreenshot_1" Screenshot="[str_Test_Image]">
+                    <ui:TakeScreenshot.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="815afc72-9ea1-41af-8eb9-f1b52b7efb65" InformativeScreenshot="70ea0e29bd526b36b40cb3761a661908" Selector="&lt;webctrl id='checkout_summary_container' tag='DIV' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TakeScreenshot.Target>
+                  </ui:TakeScreenshot>
+                  <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[str_Check]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">["Screenshots\" +in_TransactionItem.SpecificContent("Customer First Name").ToString+"_" + in_TransactionItem.SpecificContent("Customer Last Name").ToString+"_"+Now.ToString("ddMMyyyy")+ ".png"]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:SaveImage DisplayName="Save Image" FileName="[&quot;Screenshots\&quot; +in_TransactionItem.SpecificContent(&quot;Customer First Name&quot;).ToString+&quot;_&quot; + in_TransactionItem.SpecificContent(&quot;Customer Last Name&quot;).ToString+&quot;_&quot;+Now.ToString(&quot;ddMMyyyy&quot;)+ &quot;.png&quot;]" sap:VirtualizedContainerService.HintSize="434,133" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[str_Test_Image]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,92" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[in_TransactionItem.SpecificContent(&quot;Customer First Name&quot;).ToString+&quot;_&quot; + in_TransactionItem.SpecificContent(&quot;Customer Last Name&quot;).ToString+&quot;_&quot;+Now.ToString(&quot;ddMMyyyy&quot;)]" />
+                  <uascw:CompressFiles CompressedResource="{x:Null}" Password="{x:Null}" ResourcesToArchive="{x:Null}" SecurePassword="{x:Null}" CodePage="Default" CompressedFileInfo="[str_screenshotfolder]" CompressedFileName="[str_Folderpath]" CompressionLevel="Normal" DisplayName="Compress/Zip Files" EncryptionAlgorithm="Classic" sap:VirtualizedContainerService.HintSize="434,215" sap2010:WorkflowViewState.IdRef="CompressFiles_1" OverrideExistingFile="True">
+                    <uascw:CompressFiles.ContentToArchive>
+                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="1">
+                        <InArgument x:TypeArguments="x:String">[str_Folderpath]</InArgument>
+                      </scg:List>
+                    </uascw:CompressFiles.ContentToArchive>
+                  </uascw:CompressFiles>
+                </Sequence>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="500,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,92" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Exception caught&quot;]" />
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="0, 0, 0, 0" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFrSURBVDhPddPNK0RRGMfxGUozOxaShY2kJkVio5mp+QvkJXuWhLUNO1tmVlKsZDcLGRt/AiILeZsrEVJEsfGSl+/vOqee7oynPt1z73me55577r0xH9mgUI91fOIn4gujLrV6kDCMN1cQdYOUS62MTLBYQ8KqKYgqZsr5OpdeGSS04MwUfOAS5wgwg1a0GY2Zi0LcNxiBinyDXbSjCd3u/B53xh4G/fJX4ItlPuxMMO7Hf3uzrwQt7dRcfEFOxelgIc54ycxF7ajBGOwdTpBGCj3YwDF0E5unVzurBpvmorzjAU9Yg/ahATk8wudpH3rVQEu2DbxvTIQbQTCeNHNSypbzSU3oI7ET3i3CjycT5BOMS2ZOpnznIWzjwDhEEX3owgD0Gn2xxp1hAwUnSehf8PTMy3jFszvqkXyDLZafcOWVQUIzjkxB1LRLrR4kDEJvo1rxNTpcavUgYQ7axCtDhfoexvmxav8yY7Ff4RnjWld/dTIAAAAASUVORK5CYII=" InformativeScreenshot="4ab897741c744a566a6580c643c7fcdc.jpg" Selector="&lt;html app='chrome.exe' title='Swag Labs' /&gt;" Url="[str_URL2]" />
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+    <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" Body="Swag Labs Checkout" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="630,152" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" Importance="Normal" IsBodyHtml="False" IsDraft="False" Sensitivity="Normal" Subject="Payment details, delivery information, and price are all included in the checkout process." To="dhanamithra.gilda@speridian.com">
+      <ui:SendOutlookMail.Files>
+        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+      </ui:SendOutlookMail.Files>
+    </ui:SendOutlookMail>
+    <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="630,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
+  </Sequence>
+</Activity>
