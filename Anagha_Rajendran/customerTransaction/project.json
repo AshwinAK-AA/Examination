@@ -1,5 +1,5 @@
 {
-  "name": "customerTransaction",
+  "name": "dispatcher_customerTransaction",
   "description": "Robotic Enterprise Framework",
   "main": "Main.xaml",
   "dependencies": {
